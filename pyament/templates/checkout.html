@@ -1,0 +1,47 @@
+{% extends "cores/base.html" %}
+
+{% block title %}
+    Checkout PAGE
+{% endblock %}
+
+{% block body %}
+
+<div class="container mx-auto mt-10">
+    <h2 class="mb-6 text-2xl font-bold">
+        Shopping Address > <span class="text-gray-500">Checkout</span>
+    </h2>
+    <div class="flex flex-wrap">
+        <div class="w-full md:w-2/3 mb-6 md:mb-0">
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form }}
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 mt-4 rounded">Save</button>
+                </form>
+            </div>
+        </div>
+        <div class="w-full md:w-1/3">
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <ul class="divide-y divide-gray-200">
+                    {% for order_item in order_items %}
+                        <li class="py-2">{{ order_item.item.name }} x {{ order_item.item.quantity }}</li>
+                    {% endfor %}
+                </ul>
+                <div class="border-t mt-4 pt-4 flex justify-between items-center">
+                    <span class="font-bold">Order Total</span>
+                    <span class="font-bold">{{ order_total }}</span>
+                </div>
+            </div>
+            <br>
+            {% if is_address_complete %}
+                <a href="{% url 'payment' %}" class="bg-yellow-500 text-white px-4 py-2 mt-4 rounded inline-block">Make Payment</a>
+            {% else %}
+                <div class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3 mt-4 rounded">
+                    <p>Please fill up all the information to make payment</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "cores/base.html" %}
+
+{% block title %}
+    Checkout PAGE
+{% endblock %}
+
+{% block body %}
+
+<h1 class="text-3xl font-bold mb-4">Your Orders</h1>
+{% if orders %}
+    <ul>
+        {% for order in orders %}
+            <li class="border-b border-gray-200 py-4">
+                <p class="text-lg font-bold">Order ID: {{ order.orderId }}</p>
+                <p class="text-sm text-gray-600">Created: {{ order.created }}</p>
+                <p class="text-lg mt-2">Total: ${{ order.get_total }}</p>
+                <p class="mt-2">Items:</p>
+                <ul class="ml-4">
+                    {% for item in order.orderitems.all %}
+                        <li class="mt-2">
+                            {{ item.product.name }} - ${{ item.product.price }} (Quantity: {{ item.quantity }})
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p class="mt-4">{{ messages }}</p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "cores/base.html" %}
+
+{% block title %}
+    Product Details
+{% endblock %}
+
+{% block body %}
+  <div class=" mx-auto my-5">
+    <div class="card bg-white border border-gray-200 shadow-lg rounded overflow-hidden">
+        <div class="flex flex-wrap">
+            <aside class="w-full sm:w-1/2 border-r border-gray-200">
+                <article class="gallery-wrap p-4">
+                    <div class="img-big-wrap">
+                        <div>
+                            <a href="#"><img src="{{ product.image.url }}" class="w-full max-w-xs mx-auto"></a>
+                        </div>
+                    </div>
+                </article>
+            </aside>
+            <aside class="w-full sm:w-1/2">
+                <article class="card-body p-5">
+                    <h3 class="text-2xl font-semibold mb-3">{{ product.name }}</h3>
+                    <p class="text-xl font-semibold text-yellow-500">
+                        <span>BDT &#2547; {{ product.price }}</span>
+                    </p>
+                    <dl class="mt-4">
+                        <dt class="text-lg font-medium">Description</dt>
+                        <dd class="mt-2 text-gray-700">
+                           <p>{{ product.detail_text }}</p>
+                        </dd>
+                    </dl>
+                    <a href="{% url 'addtocart' product.id %}" class="mt-6 inline-block px-6 py-3 bg-blue-600 text-white font-semibold text-lg rounded hover:bg-blue-700">
+                        <i class="fas fa-shopping-cart"></i> Add to cart
+                    </a>
+                </article>
+            </aside>
+        </div>
+    </div>
+  </div>
+{% endblock %}

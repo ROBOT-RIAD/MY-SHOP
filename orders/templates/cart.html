@@ -1,0 +1,63 @@
+{% extends "cores/base.html" %}
+
+{% block title %}
+    Cart PAGE
+{% endblock %}
+
+{% block body %}
+
+<div class="container mx-auto my-5">
+    <div class="my-5">
+        <h2 class="text-2xl font-semibold">Your Cart</h2>
+    </div>
+    <table class="w-full table-auto">
+        <thead>
+            <tr class="bg-gray-200">
+                <th class="px-4 py-2" width="15%">#</th>
+                <th class="px-4 py-2">Product Name</th>
+                <th class="px-4 py-2">quantity</th>
+                <th class="px-4 py-2 text-right">Price</th>
+                <th class="px-4 py-2">Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cart in carts %}
+             <tr class="border-b">
+                <th class="px-4 py-2">{{ forloop.counter }}</th>
+                <td class="px-4 py-2">{{ cart.item.name }}</td>
+                <td class="px-4 py-2 flex items-center">
+                    <a class="mr-2" href="{% url 'decreasecart' cart.item.id %}">
+                        <span class="bg-gray-200 text-gray-800 text-sm font-semibold px-2.5 py-0.5 rounded">
+                            <i class="fas fa-minus"></i>
+                        </span>
+                    </a>
+                    {{ cart.quantity }}
+                    <a class="ml-2" href="{% url 'increasecart' cart.item.id %}">
+                        <span class="bg-gray-200 text-gray-800 text-sm font-semibold px-2.5 py-0.5 rounded">
+                            <i class="fas fa-plus"></i>
+                        </span>
+                    </a>
+                </td>
+                <td class="px-4 py-2 text-right">&#2547; {{ cart.get_total }}</td>
+                <td class="px-4 py-2">
+                    <a href="{% url 'removecart' cart.item.id  %}" class="bg-red-500 text-white px-2 py-1 rounded text-sm">Remove</a>
+                </td>
+             </tr>
+            {% endfor %}
+            <tr class="border-t">
+                <th scope="row" class="px-4 py-2"></th>
+                <td colspan="3" class="px-4 py-2">Total</td>
+                <td class="px-4 py-2 text-right">&#2547;{{ order.get_total }}</td>
+            </tr>
+            <tr>
+                <th scope="row" class="px-4 py-2"></th>
+                <td colspan="4" class="px-4 py-2 text-right">
+                    <a href="{% url 'home' %}" class="bg-yellow-500 text-white px-4 py-2 rounded mr-4">Continue Shopping</a>
+                    <a href="{% url 'checkout' %}" class="bg-green-500 text-white px-4 py-2 rounded">Proceed To Checkout</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+  
+{% endblock %}
